@@ -13,25 +13,8 @@ class User
     private $email;
     private $password;
 
-    public function __construct()
-    {
-        $this->id = $_SESSION['id'];
-        $this->name = $_SESSION['name'];
-        $this->surname = $_SESSION['surname'];
-        $this->email = $_SESSION['email'];
-        $this->password = $_SESSION['password'];
-    }
 
-    public function __destruct()
-    {
-        $_SESSION['id'] = $this->id;
-        $_SESSION['name'] = $this->name;
-        $_SESSION['surname'] = $this->surname;
-        $_SESSION['email'] = $this->email;
-        $_SESSION['password'] = $this->password;
-    }
-
-    public function equalsemail($users, $email, $password)
+    public function __construct($users, $email, $password)
     {
         foreach ($users as $key => $value) {
             if ($email == $value['email'] && $password == $value['password']) {
@@ -43,16 +26,16 @@ class User
             }
         }
     }
-
         public function autendificated($password)
     {
-        return $password && $password == $this->password;
+        if($password == $this->password){
+            $_SESSION['id'] = $this->id;
+            return true;
+        }
+
+        return false;
     }
 
-    public function getpassword()
-    {
-        return $this->password;
-    }
 }
 
 /**Делаем класс пользователь(User).
